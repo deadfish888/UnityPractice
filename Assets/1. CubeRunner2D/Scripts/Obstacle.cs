@@ -1,41 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Obstacle : MonoBehaviour
+namespace CubeRunner2D
 {
-    public float moveSpeed;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
 
-    GameController m_gc;
-
-    bool isIncrement = false;
-    // Start is called before the first frame update
-    void Start()
+    public class Obstacle : MonoBehaviour
     {
-        m_gc = FindAnyObjectByType<GameController>();
-    }
+        public float moveSpeed;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (m_gc.IsOver())
+        GameController m_gc;
+
+        bool isIncrement = false;
+        // Start is called before the first frame update
+        void Start()
         {
-            return;
+            m_gc = FindAnyObjectByType<GameController>();
         }
-        transform.position = transform.position + Vector3.left * moveSpeed * Time.deltaTime;
-        if (transform.position.x <= -8 && !isIncrement)
-        {
-            m_gc.IncrementScore();
-            isIncrement = true;
-        }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("SceneLimit"))
+        // Update is called once per frame
+        void Update()
         {
-            Debug.Log("Snap!!");
-            Destroy(gameObject);
+            if (m_gc.IsOver())
+            {
+                return;
+            }
+            transform.position = transform.position + Vector3.left * moveSpeed * Time.deltaTime;
+            if (transform.position.x <= -8 && !isIncrement)
+            {
+                m_gc.IncrementScore();
+                isIncrement = true;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("SceneLimit"))
+            {
+                Debug.Log("Snap!!");
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -1,95 +1,98 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
-
-public class GameController : MonoBehaviour
+namespace CubeRunner2D
 {
-    public GameObject obstacle;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
+    using Random = UnityEngine.Random;
 
-    public AudioSource aus;
-
-    public float spawnTime;
-
-    float m_spawnTime;
-
-    int m_score;
-
-    bool m_isOver=false;
-
-    UIManager m_ui;
-
-    void Start()
+    public class GameController : MonoBehaviour
     {
-        m_spawnTime = 0; m_score = 0;
-        m_ui = FindAnyObjectByType<UIManager>();
-        m_ui.SetScoreText(m_score);
-    }
+        public GameObject obstacle;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (m_isOver)
+        public AudioSource aus;
+
+        public float spawnTime;
+
+        float m_spawnTime;
+
+        int m_score;
+
+        bool m_isOver = false;
+
+        UIManager m_ui;
+
+        void Start()
         {
-            m_ui.ShowPanel(m_isOver);
-            Time.timeScale = 0;
-            return;
+            m_spawnTime = 0; m_score = 0;
+            m_ui = FindAnyObjectByType<UIManager>();
+            m_ui.SetScoreText(m_score);
         }
-        m_spawnTime -= Time.deltaTime;
-        if(m_spawnTime <= 0)
+
+        // Update is called once per frame
+        void Update()
         {
-            SpawnObstacle();
-            m_spawnTime = spawnTime;
+            if (m_isOver)
+            {
+                m_ui.ShowPanel(m_isOver);
+                Time.timeScale = 0;
+                return;
+            }
+            m_spawnTime -= Time.deltaTime;
+            if (m_spawnTime <= 0)
+            {
+                SpawnObstacle();
+                m_spawnTime = spawnTime;
+            }
         }
-    }
 
-    public void Replay()
-    {
-        SceneManager.LoadScene("Gameplay");
-        m_isOver = false;
-        Time.timeScale = 1;
-    }
-
-    private void SpawnObstacle()
-    {
-        Vector3 spawnPos = new Vector3(13f, Random.Range(-2.5f, -1.2f));
-
-        if (obstacle)
+        public void Replay()
         {
-            Instantiate(obstacle, spawnPos, Quaternion.identity);
+            SceneManager.LoadScene("Gameplay");
+            m_isOver = false;
+            Time.timeScale = 1;
         }
-    }
 
-    public int GetScore() 
-    {
-        return m_score;    
-    }
-    public void SetScore(int value)
-    {
-        m_score = value;
-    }
-    public void IncrementScore()
-    {
-        if (m_isOver)
+        private void SpawnObstacle()
         {
-            return;
+            Vector3 spawnPos = new Vector3(13f, Random.Range(-2.5f, -1.2f));
+
+            if (obstacle)
+            {
+                Instantiate(obstacle, spawnPos, Quaternion.identity);
+            }
         }
-        m_score++;
-        m_ui.SetScoreText(m_score);
-    }
 
-    public float GetSpawnTime()
-    {
-        return m_spawnTime;
-    }
+        public int GetScore()
+        {
+            return m_score;
+        }
+        public void SetScore(int value)
+        {
+            m_score = value;
+        }
+        public void IncrementScore()
+        {
+            if (m_isOver)
+            {
+                return;
+            }
+            m_score++;
+            m_ui.SetScoreText(m_score);
+        }
 
-    public void SetSpawnTime(float value)
-    {
-        m_spawnTime = value;
-    }
+        public float GetSpawnTime()
+        {
+            return m_spawnTime;
+        }
 
-    public bool IsOver() { return m_isOver; }
-    public void SetOver(bool value) {  m_isOver = value; }
+        public void SetSpawnTime(float value)
+        {
+            m_spawnTime = value;
+        }
+
+        public bool IsOver() { return m_isOver; }
+        public void SetOver(bool value) { m_isOver = value; }
+    }
 }

@@ -1,28 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-
-public class UIManager : MonoBehaviour
+namespace CubeRunner2D
 {
-    public TextMeshProUGUI scoreText;
+    using System.Collections;
+    using System.Collections.Generic;
+    using TMPro;
+    using UnityEngine;
 
-    public GameObject gameoverPanel;
-
-    // Start is called before the first frame update
-    public void SetScoreText(int score)
+    public class UIManager : MonoBehaviour
     {
-        if (scoreText != null)
+        public TextMeshProUGUI scoreText;
+
+        public GameObject gameoverPanel;
+
+        // Start is called before the first frame update
+        public void SetScoreText(int score)
         {
-            scoreText.SetText("Score: "+score);
+            if (scoreText != null)
+            {
+                scoreText.SetText("Score: " + score);
+            }
         }
-    }
 
-    public void ShowPanel(bool isShow)
-    {
-        if (gameoverPanel != null)
+        public void ShowPanel(bool isShow)
         {
-            gameoverPanel.SetActive(isShow);
+            if (gameoverPanel != null)
+            {
+                gameoverPanel.SetActive(isShow);
+            }
         }
     }
 }
